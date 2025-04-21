@@ -6,11 +6,18 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 13:52:51 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/04/19 13:58:27 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/04/21 09:44:02 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+//prints a string to the standard output.//
+void	putstr(char *str)
+{
+	while (*str)
+		write(1, str++, 1);
+}
 
 // Converts a string to a long long integer.//
 long long	atoi_ll(const char *str)
