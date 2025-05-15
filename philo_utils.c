@@ -6,7 +6,7 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 13:52:51 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/04/19 13:58:27 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/05/10 21:10:19 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,16 @@ unsigned long long	get_time(void)
 }
 
 // Sleeps for a specified time in milliseconds.//
-int	usleep_ms(unsigned long long time)
+int	usleep_ms(unsigned long long time, t_philo *philo)
 {
 	unsigned long long	start;
 
 	start = get_time();
 	while (get_time() - start < time)
+	{
+		if (get_time() - philo->last_meal >= philo->data->time_die) //The philo ashould die whithin the death range
+			return(0);
 		usleep(500);
-	return (0);
+	}
+	return (1);
 }
