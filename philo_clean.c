@@ -1,26 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo_clean.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/19 13:52:44 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/04/20 10:59:06 by hajmoham         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
-//prints a string to the standard output.//
-void	putstr(char *str)
-{
-	while (*str)
-		write(1, str++, 1);
-}
-
-// Cleans up the data structure.//
 void	clean(t_data *data)
 {
-	(void)data;
+	unsigned long long	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		pthread_mutex_destroy(&data->fork_mutex[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->eat_mutex);
+	pthread_mutex_destroy(&data->die_mutex);
+	pthread_mutex_destroy(&data->forks_mutex);
+	free(data->fork_mutex);
+	free(data->philos);
+	free(data->forks);
 }
