@@ -79,6 +79,7 @@ void					*monitor_routine(void *arg);
 // philo_forks.c
 void					lock_forks(t_philo *philo, int first, int second);
 void					release_forks(t_philo *philo, int first, int second);
+int						fork_checker(t_philo *philo, int first, int second);
 void					lock_order(t_philo *philo, int *first, int *second);
 
 #endif
