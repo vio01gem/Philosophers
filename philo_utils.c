@@ -33,7 +33,7 @@ int	usleep_ms(unsigned long long time, t_philo *philo)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-		if (get_time() - philo->last_meal >= philo->data->time_die)
+		if (get_time() - philo->last_meal >= philo->shared_data->time_die)
 			return (0); // Philosopher died
 		usleep(500);
 	}
@@ -51,6 +51,8 @@ void	putstr(char *str)
 int	print_status(t_data *data, int id, int status)
 {
 	pthread_mutex_lock(&data->print_mutex);
+	if (status == DEAD)
+		printf("%llu %d died\n", get_time() - data->start_time, id);
 	if (is_dead(data))
 	{
 		pthread_mutex_unlock(&data->print_mutex);
@@ -65,8 +67,6 @@ int	print_status(t_data *data, int id, int status)
 		printf("is thinking\n");
 	else if (status == FORK)
 		printf("has taken a fork\n");
-	else if (status == DEAD)
-		printf("died\n");
 	pthread_mutex_unlock(&data->print_mutex);
 	return (0);
 }

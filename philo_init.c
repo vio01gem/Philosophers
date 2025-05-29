@@ -28,7 +28,7 @@ int	init_philos(t_data *data)
 		data->philos[i].right_fork = (i + 1) % data->num_philo;
 		data->philos[i].eat_count = 0;
 		data->philos[i].last_meal = data->start_time;
-		data->philos[i].data = data;
+		data->philos[i].shared_data = data;
 		i++;
 	}
 	return (0);
@@ -51,8 +51,14 @@ int	init_mutex(t_data *data)
 		return (putstr("Error: Eat mutex init failed\n"), 1);
 	if (pthread_mutex_init(&data->die_mutex, NULL))
 		return (putstr("Error: Die mutex init failed\n"), 1);
-	if (pthread_mutex_init(&data->forks_mutex, NULL))
-		return (putstr("Error: Forks array mutex init failed\n"), 1);
+	i = 0;
+	while (i < data->num_philo)
+	{
+		if (pthread_mutex_init(&data->fork_mutex[i], NULL))
+			return (putstr("Error: Forks array mutex init failed\n"), 1);
+		i++;
+	}
+	data->dead = false;
 	return (0);
 }
 

@@ -13,7 +13,6 @@ void	clean(t_data *data)
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->eat_mutex);
 	pthread_mutex_destroy(&data->die_mutex);
-	pthread_mutex_destroy(&data->forks_mutex);
 	free(data->fork_mutex);
 	free(data->philos);
 	free(data->forks);

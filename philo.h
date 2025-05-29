@@ -23,7 +23,7 @@ typedef struct s_philo
 	int					left_fork;	// Index of left fork
 	int					right_fork;	// Index of right fork
 	pthread_t			thread;		// Thread for this philosopher
-	struct s_data		*data;		// Pointer to shared data
+	struct s_data		*shared_data;		// Pointer to shared data
 }						t_philo;
 
 typedef struct s_data
@@ -36,7 +36,6 @@ typedef struct s_data
 	int					*forks;		// Fork status array
 	t_philo				*philos;	// Array of philosophers
 	pthread_mutex_t		*fork_mutex;// Mutexes for forks
-	pthread_mutex_t		forks_mutex;// Mutex for forks array
 	pthread_mutex_t		print_mutex;// Mutex for printing
 	pthread_mutex_t		eat_mutex;	// Mutex for eat_count/last_meal
 	pthread_mutex_t		die_mutex;	// Mutex for dead flag

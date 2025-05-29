@@ -42,7 +42,7 @@ void	*monitor_routine(void *arg)
 	unsigned long long	i;
 
 	data = (t_data *)arg;
-	usleep(1000); // Delay to let philosophers start
+	// usleep(1000); // Delay to let philosophers start
 	while (!is_dead(data))
 	{
 		if (check_eats(data))
@@ -56,6 +56,8 @@ void	*monitor_routine(void *arg)
 		while (i < data->num_philo)
 		{
 			pthread_mutex_lock(&data->eat_mutex);
+
+			printf("%llu\n", get_time() - (data->philos[i].last_meal + data->time_die));
 			if (get_time() > data->philos[i].last_meal + data->time_die)
 			{
 				pthread_mutex_lock(&data->die_mutex);
@@ -68,7 +70,7 @@ void	*monitor_routine(void *arg)
 			pthread_mutex_unlock(&data->eat_mutex);
 			i++;
 		}
-		usleep(1000); // Prevent busy-waiting
+		// usleep(1000); // Prevent busy-waiting
 	}
 	return (NULL);
 }

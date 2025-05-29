@@ -21,10 +21,12 @@ int	fork_checker(t_philo *philo, int first, int second)
 	int	first_id;
 	int	second_id;
 
-	pthread_mutex_lock(&philo->data->forks_mutex);
-	first_id = philo->data->forks[first]; // Get first fork's tag
-	second_id = philo->data->forks[second]; // Get second fork's tag
-	pthread_mutex_unlock(&philo->data->forks_mutex);
+	pthread_mutex_lock(&philo->shared_data->fork_mutex[first]);
+	first_id = philo->shared_data->forks[first];
+	pthread_mutex_unlock(&philo->shared_data->fork_mutex[first]);
+	pthread_mutex_lock(&philo->shared_data->fork_mutex[second]); // Get first fork's tag
+	second_id = philo->shared_data->forks[second];
+	pthread_mutex_unlock(&philo->shared_data->fork_mutex[second]); // Get second fork's tag
 	if (first_id != (int)philo->philo_id && second_id != (int)philo->philo_id)
 		return (1); // Forks are free
 	return (0);
@@ -34,14 +36,14 @@ int	fork_checker(t_philo *philo, int first, int second)
 void	lock_forks(t_philo *philo, int first, int second)
 {
 	lock_order(philo, &first, &second);
-	pthread_mutex_lock(&philo->data->fork_mutex[first]); // Lock first fork
-	pthread_mutex_lock(&philo->data->fork_mutex[second]); // Lock second fork
+	pthread_mutex_lock(&philo->shared_data->fork_mutex[first]); // Lock first fork
+	pthread_mutex_lock(&philo->shared_data->fork_mutex[second]); // Lock second fork
 }
 
 // Releases two forks after eating
 void	release_forks(t_philo *philo, int first, int second)
 {
 	lock_order(philo, &first, &second);
-	pthread_mutex_unlock(&philo->data->fork_mutex[first]); // Unlock first fork
-	pthread_mutex_unlock(&philo->data->fork_mutex[second]); // Unlock second fork
+	pthread_mutex_unlock(&philo->shared_data->fork_mutex[first]); // Unlock first fork
+	pthread_mutex_unlock(&philo->shared_data->fork_mutex[second]); // Unlock second fork
 }
