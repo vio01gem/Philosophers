@@ -28,16 +28,15 @@ unsigned long long	get_time(void)
 // Sleeps for time ms, checks for death
 int	usleep_ms(unsigned long long time, t_philo *philo)
 {
-	unsigned long long	start;
+	const unsigned long long	start = get_time();
 
-	start = get_time();
-	while (get_time() - start < time)
+	while (get_time() < (start + time))
 	{
-		if (get_time() - philo->last_meal >= philo->shared_data->time_die)
-			return (0); // Philosopher died
+		if (is_dead(philo->shared_data))
+			return (1);
 		usleep(500);
 	}
-	return (1);
+	return (0);
 }
 
 // Prints string to stdout

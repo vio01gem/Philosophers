@@ -35,6 +35,25 @@ bool	check_eats(t_data *data)
 	return (true); // All ate enough
 }
 
+// Marks all philosophers as having concluded their meals
+void	meals_end(t_data *data)
+{
+	pthread_mutex_lock(&data->die_mutex);
+	data->dead = true;
+	pthread_mutex_unlock(&data->die_mutex);
+	pthread_mutex_unlock(&data->eat_mutex);
+}
+
+// Marks a philosopher as dead and prints status
+void	death_of_philo(t_data *data, unsigned long long i)
+{
+	pthread_mutex_lock(&data->die_mutex);
+	data->dead = true;
+	pthread_mutex_unlock(&data->die_mutex);
+	print_status(data, data->philos[i].philo_id, DEAD);
+	pthread_mutex_unlock(&data->eat_mutex);
+}
+
 // Monitors philosophers for death or meal completion
 void	*monitor_routine(void *arg)
 {
@@ -42,35 +61,25 @@ void	*monitor_routine(void *arg)
 	unsigned long long	i;
 
 	data = (t_data *)arg;
-	// usleep(1000); // Delay to let philosophers start
 	while (!is_dead(data))
 	{
-		if (check_eats(data))
-		{
-			pthread_mutex_lock(&data->die_mutex);
-			data->dead = true; // Stop simulation
-			pthread_mutex_unlock(&data->die_mutex);
-			return (NULL);
-		}
 		i = 0;
 		while (i < data->num_philo)
 		{
 			pthread_mutex_lock(&data->eat_mutex);
-
-			printf("%llu\n", get_time() - (data->philos[i].last_meal + data->time_die));
+			if (data->num_eat > 0 && check_eats(data))
+			{
+				meals_end(data);
+				return (NULL);
+			}
 			if (get_time() > data->philos[i].last_meal + data->time_die)
 			{
-				pthread_mutex_lock(&data->die_mutex);
-				data->dead = true; // Set dead flag
-				pthread_mutex_unlock(&data->die_mutex);
-				print_status(data, data->philos[i].philo_id, DEAD);
-				pthread_mutex_unlock(&data->eat_mutex);
-				return (NULL); // Stop monitoring
+				death_of_philo(data, i);
+				return (NULL);
 			}
 			pthread_mutex_unlock(&data->eat_mutex);
 			i++;
 		}
-		// usleep(1000); // Prevent busy-waiting
 	}
 	return (NULL);
 }

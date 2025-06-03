@@ -13,10 +13,10 @@ int	philo_eat(t_philo *philo)
 		return (release_forks(philo, first, second), 1);
 	if (print_status(philo->shared_data, philo->philo_id, EAT))
 		return (release_forks(philo, first, second), 1);
-	philo->last_meal = get_time(); // Update last meal time
 	if (usleep_ms(philo->shared_data->time_eat, philo))
 		return (release_forks(philo, first, second), 1);
 	pthread_mutex_lock(&philo->shared_data->eat_mutex);
+	philo->last_meal = get_time(); // Update last meal time
 	philo->eat_count++; // Increment meal count
 	pthread_mutex_unlock(&philo->shared_data->eat_mutex);
 	philo->shared_data->forks[first] = philo->philo_id; // Tag forks
