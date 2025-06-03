@@ -23,13 +23,8 @@ bool	check_eats(t_data *data)
 	i = 0;
 	while (i < data->num_philo)
 	{
-		pthread_mutex_lock(&data->eat_mutex);
 		if (data->philos[i].eat_count < (unsigned long long)data->num_eat)
-		{
-			pthread_mutex_unlock(&data->eat_mutex);
 			return (false); // Not all ate enough
-		}
-		pthread_mutex_unlock(&data->eat_mutex);
 		i++;
 	}
 	return (true); // All ate enough

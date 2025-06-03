@@ -30,12 +30,16 @@ int	usleep_ms(unsigned long long time, t_philo *philo)
 {
 	const unsigned long long	start = get_time();
 
+	int i = 0;
 	while (get_time() < (start + time))
 	{
+		// printf("%llu < %llu: [%i]\n", get_time(), start + time, i);
 		if (is_dead(philo->shared_data))
 			return (1);
 		usleep(500);
+		i++;
 	}
+	// printf("usleep_ms finished after %d iterations\n", i);
 	return (0);
 }
 
