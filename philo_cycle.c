@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_cycle.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 16:46:08 by hajmoham          #+#    #+#             */
+/*   Updated: 2025/06/03 16:46:09 by hajmoham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 // Makes philosopher eat, updates forks
@@ -43,6 +55,21 @@ int	philo_think(t_philo *philo)
 	return (0);
 }
 
+// Checks for 1 philosopher case
+void	one_philo_case(t_philo *philo)
+{
+	if (philo->shared_data->num_philo == 1)
+	{
+		print_status(philo->shared_data, philo->philo_id, FORK);
+		usleep_ms(philo->shared_data->time_die, philo);
+		pthread_mutex_lock(&philo->shared_data->die_mutex);
+		philo->shared_data->dead = true; // Set dead flag
+		pthread_mutex_unlock(&philo->shared_data->die_mutex);
+		print_status(philo->shared_data, philo->philo_id, DEAD);
+		return;
+	}
+}
+
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -50,6 +77,11 @@ void	*philo_routine(void *arg)
 	int		second;
 
 	philo = (t_philo *)arg;
+	if (philo->shared_data->num_philo == 1) // Handle single philosopher case
+	{
+		one_philo_case(philo);
+		return (NULL);
+	}
 	while (!is_dead(philo->shared_data))
 	{
 		lock_order(philo, &first, &second);

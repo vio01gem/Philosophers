@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 16:46:17 by hajmoham          #+#    #+#             */
+/*   Updated: 2025/06/03 16:46:18 by hajmoham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_data(t_data *data)
@@ -51,13 +63,6 @@ int	init_mutex(t_data *data)
 		return (putstr("Error: Eat mutex init failed\n"), 1);
 	if (pthread_mutex_init(&data->die_mutex, NULL))
 		return (putstr("Error: Die mutex init failed\n"), 1);
-	i = 0;
-	while (i < data->num_philo)
-	{
-		if (pthread_mutex_init(&data->fork_mutex[i], NULL))
-			return (putstr("Error: Forks array mutex init failed\n"), 1);
-		i++;
-	}
 	data->dead = false;
 	return (0);
 }
