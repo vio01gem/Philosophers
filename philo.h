@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/04 09:42:44 by hajmoham          #+#    #+#             */
+/*   Updated: 2025/06/04 09:43:26 by hajmoham         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -17,7 +29,7 @@
 
 typedef struct s_philo
 {
-	unsigned long long	philo_id;	 // Philosopher ID (1, 2, ...)
+	unsigned long long	philo_id;	 // Philosopher ID
 	unsigned long long	last_meal;	 // Time of last meal (ms)
 	unsigned long long	eat_count; 	 // Number of meals eaten
 	int					left_fork; 	 // Index of left fork
@@ -32,16 +44,16 @@ typedef struct s_data
 	unsigned long long	time_die;	// Time to die (ms)
 	unsigned long long	time_eat;	// Time to eat (ms)
 	unsigned long long	time_sleep;	// Time to sleep (ms)
-	long long			num_eat;	// Number of meals (optional, -1 if none)
-	int					*forks;		// Fork status array
-	t_philo				*philos;	// Array of philosophers
+	unsigned long long	start_time;	// Simulation start time (ms)
 	pthread_mutex_t		*fork_mutex;// Mutexes for forks
 	pthread_mutex_t		print_mutex;// Mutex for printing
 	pthread_mutex_t		eat_mutex;	// Mutex for eat_count/last_meal
 	pthread_mutex_t		die_mutex;	// Mutex for dead flag
-	bool				dead;		// True if a philosopher dies
-	unsigned long long	start_time;	// Simulation start time (ms)
 	pthread_t			monitor;	// Monitor thread
+	long long			num_eat;	// Number of meals (optional, -1 if none)
+	int					*forks;		// Fork status array
+	bool				dead;		// True if a philosopher dies
+	t_philo				*philos;	// Array of philosophers
 }						t_data;
 
 // philo_parse.c
@@ -57,7 +69,6 @@ int						print_status(t_data *data, int id, int status);
 
 // philo_clean.c
 void					clean(t_data *data);
-
 
 // philo_init.c
 int						init_data(t_data *data);

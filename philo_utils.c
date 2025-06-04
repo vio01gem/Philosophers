@@ -6,7 +6,7 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:47:06 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/06/03 16:47:07 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:28:04 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,16 @@ unsigned long long	get_time(void)
 int	usleep_ms(unsigned long long time, t_philo *philo)
 {
 	const unsigned long long	start = get_time();
+	int							i;
 
-	int i = 0;
+	i = 0;
 	while (get_time() < (start + time))
 	{
-		// printf("%llu < %llu: [%i]\n", get_time(), start + time, i);
 		if (is_dead(philo->shared_data))
 			return (1);
 		usleep(500);
 		i++;
 	}
-	// printf("usleep_ms finished after %d iterations\n", i);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:46:08 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/06/03 16:46:09 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:22:13 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	one_philo_case(t_philo *philo)
 	}
 }
 
+// Main routine for philosopher thread
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;

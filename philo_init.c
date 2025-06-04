@@ -6,12 +6,13 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:46:17 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/06/03 16:46:18 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:26:28 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// Initializes data structure for philosophers and forks
 int	init_data(t_data *data)
 {
 	data->forks = malloc(sizeof(int) * data->num_philo);
@@ -28,6 +29,7 @@ int	init_data(t_data *data)
 	return (0);
 }
 
+// Initializes philosophers with their IDs, forks, and initial states
 int	init_philos(t_data *data)
 {
 	unsigned long long	i;
@@ -46,6 +48,7 @@ int	init_philos(t_data *data)
 	return (0);
 }
 
+// Initializes mutexes for forks, printing, eating, and dying
 int	init_mutex(t_data *data)
 {
 	unsigned long long	i;
@@ -67,6 +70,7 @@ int	init_mutex(t_data *data)
 	return (0);
 }
 
+// Initializes forks based on the number of philosophers
 void	init_forks(t_data *data)
 {
 	unsigned long long	i;
@@ -84,6 +88,7 @@ void	init_forks(t_data *data)
 	}
 }
 
+// Creates threads for each philosopher and a monitor thread
 int	create_threads(t_data *data)
 {
 	unsigned long long	i;
