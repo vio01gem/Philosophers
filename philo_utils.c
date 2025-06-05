@@ -6,7 +6,7 @@
 /*   By: hajmoham <hajmoham@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 16:47:06 by hajmoham          #+#    #+#             */
-/*   Updated: 2025/06/04 09:28:04 by hajmoham         ###   ########.fr       */
+/*   Updated: 2025/06/05 08:37:24 by hajmoham         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ long long	atoi_ll(const char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		num = num * 10 + (*str - '0');
+		if (num > 2147483647)
+			return (2147483649);
 		str++;
 	}
 	return (num);
